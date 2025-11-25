@@ -1,9 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { checkAuth } from '@/lib/auth';
 
 export default function JoinPage() {
     const [email, setEmail] = useState('');
@@ -11,20 +9,7 @@ export default function JoinPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [code, setCode] = useState('');
-    const [checkingAuth, setCheckingAuth] = useState(true);
     const router = useRouter();
-
-    useEffect(() => {
-        const checkAuthentication = async () => {
-            const isAuthenticated = await checkAuth();
-            if (isAuthenticated) {
-                router.push('/dashboard');
-            } else {
-                setCheckingAuth(false);
-            }
-        };
-        checkAuthentication();
-    }, [router]);
 
     const handleEmailSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -59,7 +44,8 @@ export default function JoinPage() {
                 body: JSON.stringify({ email, code, action: 'verify' }),
             });
             if (res.ok) {
-                router.push('/dashboard');
+                const data = await res.json();
+                router.push(`/dashboard?token=${data.token}`);
             } else {
                 setError(true);
             }
@@ -70,55 +56,64 @@ export default function JoinPage() {
         }
     };
 
-    if (checkingAuth) {
-        return (
-            <div className="auth-container">
-                <p className="auth-message">checking authentication...</p>
-            </div>
-        );
-    }
-
     return (
         <div className="auth-container">
-            <div className="auth-content">
-                <Link href="/" className="back-link">← back</Link>
-                
-                {step === 'email' ? (
-                    <form onSubmit={handleEmailSubmit} className="auth-form">
-                        <h1 className="auth-title">what is your uwaterloo email address?</h1>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="j1doe@uwaterloo.ca"
-                            className="auth-input"
-                            required
-                            autoFocus
-                            disabled={loading}
-                        />
-                        {loading && <p className="auth-message">sending...</p>}
-                        {error && <p className="auth-error">something went wrong. try again.</p>}
-                    </form>
-                ) : (
-                    <form onSubmit={handleCodeSubmit} className="auth-form">
-                        <h1 className="auth-title">we sent you a code :)</h1>
-                        <input
-                            type="text"
-                            value={code}
-                            onChange={(e) => setCode(e.target.value)}
-                            placeholder="123456"
-                            className="auth-input code-input"
-                            maxLength={6}
-                            pattern="[0-9]{6}"
-                            required
-                            autoFocus
-                            disabled={loading}
-                        />
-                        {loading && <p className="auth-message">verifying...</p>}
-                        {error && <p className="auth-error">invalid code. try again.</p>}
-                    </form>
-                )}
-            </div>
+            {step === 'email' ? (
+                <form onSubmit={handleEmailSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                    <h1 style={{ fontSize: '2rem', fontWeight: 600 }}>what is your uwaterloo email address?</h1>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="j1doe@uwaterloo.ca"
+                        className="input-field"
+                        style={{
+                            border: 'none',
+                            outline: 'none',
+                            boxShadow: 'none',
+                            background: 'transparent',
+                            textAlign: 'center',
+                            width: '100%',
+                            fontSize: '1.5rem',
+                            color: 'var(--foreground)'
+                        }}
+                        required
+                        autoFocus
+                        disabled={loading}
+                    />
+                    <div style={{ width: '100%', maxWidth: '400px', height: '4px', background: '#000', marginTop: '1rem' }}></div>
+                    {loading && <p>sending...</p>}
+                    {error && <p style={{ color: 'red' }}>something went wrong. try again.</p>}
+                </form>
+            ) : (
+                <form onSubmit={handleCodeSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                    <h1 style={{ fontSize: '2rem', fontWeight: 600 }}>we sent you a code :)</h1>
+                    <input
+                        type="text"
+                        value={code}
+                        onChange={(e) => setCode(e.target.value)}
+                        placeholder="123456"
+                        className="input-field"
+                        style={{ 
+                            letterSpacing: '0.5em', 
+                            fontSize: '2rem',
+                            border: 'none',
+                            outline: 'none',
+                            boxShadow: 'none',
+                            background: 'transparent',
+                            textAlign: 'center',
+                            width: '100%',
+                            color: 'var(--foreground)'
+                        }}
+                        required
+                        autoFocus
+                        disabled={loading}
+                    />
+                    <div style={{ width: '100%', maxWidth: '400px', height: '4px', background: '#000', marginTop: '1rem' }}></div>
+                    {loading && <p>verifying...</p>}
+                    {error && <p style={{ color: 'red' }}>invalid code. try again.</p>}
+                </form>
+            )}
         </div>
     );
 }

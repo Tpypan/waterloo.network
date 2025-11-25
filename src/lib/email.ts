@@ -10,7 +10,7 @@ export async function sendVerificationEmail(email: string, code: string) {
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'Webring <support@uwaterloo.network>',
+            from: 'Webring <onboarding@resend.dev>',
             to: [email],
             subject: 'Your Verification Code',
             html: `<p>Your verification code is: <strong>${code}</strong></p>`,

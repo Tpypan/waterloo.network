@@ -16,24 +16,27 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Email is required' }, { status: 400 });
         }
 
-        // const isAllowed = email.endsWith('@uwaterloo.ca') || email === 'shayaanazeem10@gmail.com';
-        const isAllowed = true; // Allow all emails for testing
+        // Allow personal email for testing or uwaterloo emails
+        const isAllowed = email.endsWith('@uwaterloo.ca') || email === 'shayaanazeem10@gmail.com';
 
         if (!isAllowed) {
             return NextResponse.json({ error: 'Please use a uwaterloo.ca email' }, { status: 400 });
         }
         if (action === 'send') {
+            // Generate code
             const generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
 
+            // Store code (upsert to replace existing)
             try {
                 await prisma.verificationCode.create({
                     data: {
                         email,
                         code: generatedCode,
-                        expiresAt: new Date(Date.now() + 10 * 60 * 1000),
+                        expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 mins
                     },
                 });
 
+                // Send email
                 const emailSent = await sendVerificationEmail(email, generatedCode);
 
                 if (!emailSent) {
@@ -53,6 +56,7 @@ export async function POST(request: Request) {
                 return NextResponse.json({ error: 'Missing code' }, { status: 400 });
             }
 
+            // Verify code
             let isValid = false;
 
             try {
@@ -61,15 +65,21 @@ export async function POST(request: Request) {
                 });
                 if (record && record.expiresAt > new Date()) {
                     isValid = true;
+                    // Clean up
                     await prisma.verificationCode.delete({ where: { id: record.id } });
                 }
             } catch (e) {
                 console.error('DB Error:', e);
             }
 
+            // Fallback for dev if DB fails or for testing
             if (code === '123456') isValid = true;
 
+
+            // ... inside the verify block ...
+
             if (isValid) {
+                // Create or update user
                 try {
                     await prisma.user.upsert({
                         where: { email },
@@ -80,6 +90,7 @@ export async function POST(request: Request) {
                     console.error('User Upsert Error:', e);
                 }
 
+                // Set session cookie
                 const cookieStore = await cookies();
                 cookieStore.set('webring_session', email, {
                     httpOnly: true,
