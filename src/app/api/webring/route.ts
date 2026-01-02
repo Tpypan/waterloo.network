@@ -1,6 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { members } from '@/data/members';
 
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+// Handle preflight requests
+export async function OPTIONS() {
+    return NextResponse.json({}, { headers: corsHeaders });
+}
+
 // API endpoint that returns webring members for the embed widget
 // If userId is provided, returns that user's connections
 // Otherwise returns all members
@@ -32,5 +43,7 @@ export async function GET(request: NextRequest) {
             name: m.name,
             website: m.website,
         })),
+    }, {
+        headers: corsHeaders,
     });
 }
