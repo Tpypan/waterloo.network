@@ -179,6 +179,18 @@ export async function GET() {
         headers: {
             'Content-Type': 'application/javascript',
             'Cache-Control': 'public, max-age=300',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        },
+    });
+}
+
+// Handle preflight requests
+export async function OPTIONS() {
+    return new NextResponse(null, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, OPTIONS',
         },
     });
 }
