@@ -15,9 +15,19 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "uwaterloo.network",
-  description: "A webring for interdisciplinary UWaterloo students",
+  description: "A webring for UWaterloo students",
   icons: {
-    icon: '/icon.svg',
+    icon: '/favicon.svg',
+  },
+  openGraph: {
+    title: "uwaterloo.network",
+    description: "A webring for UWaterloo students",
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "uwaterloo.network",
+    description: "A webring for UWaterloo students",
   },
 };
 
