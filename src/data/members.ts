@@ -135,6 +135,18 @@ export const members: Member[] = [
     linkedin: "https://linkedin.com/muhibwaqar",
     connections: ["shayaan-azeem"],
   },
+  {
+    id: "aayan-rahman",
+    name: "Aayan Rahman",
+    website: "https://aayanrahman.me",
+    program: "Electrical Engineering",
+    year: "2030",
+    profilePic: "/photos/aayan-rahman.PNG",
+    instagram: "https://www.instagram.com/aayanr300/",
+    twitter: "https://x.com/aayanr07",
+    linkedin: "https://www.linkedin.com/in/aayan-rahman/",
+    connections: ["zane-beeai", "shayaan-azeem"],
+  },
 
   // ============================================
   // ADD YOUR ENTRY ABOVE THIS LINE

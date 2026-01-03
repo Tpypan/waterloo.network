@@ -64,7 +64,7 @@ export default function MembersTable({ members, searchQuery }: MembersTableProps
                                         {highlightText(member.name) || 'No name'}
                                     </a>
                                 ) : (
-                                    <span>{highlightText(member.name) || 'No name'}</span>
+                                <span>{highlightText(member.name) || 'No name'}</span>
                                 )}
                             </td>
                             <td>{highlightText(member.program) || '—'}</td>
