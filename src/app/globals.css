@@ -442,6 +442,11 @@ a {
     font-size: 0.85rem;
   }
   
+  .members-table th:nth-child(1),
+  .members-table td:nth-child(1) {
+    padding-left: 0.25rem;
+  }
+  
   .members-table th {
     font-size: 0.9rem;
     padding-bottom: 0.75rem;
@@ -450,6 +455,7 @@ a {
   .members-table th:nth-child(4),
   .members-table td:nth-child(4) {
     padding-left: 0.5rem;
+    padding-right: 0.25rem;
   }
   
   .avatar {

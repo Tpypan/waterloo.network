@@ -1,11 +1,21 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Member, Connection } from '@/data/members';
 import MembersTable from './MembersTable';
 import NetworkGraph from './NetworkGraph';
 import AsciiBackground from './AsciiBackground';
 import { Search } from 'lucide-react';
+
+// Fisher-Yates shuffle
+function shuffleArray<T>(array: T[]): T[] {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
 
 interface SearchableContentProps {
     members: Member[];
@@ -14,14 +24,17 @@ interface SearchableContentProps {
 
 export default function SearchableContent({ members, connections }: SearchableContentProps) {
     const [searchQuery, setSearchQuery] = useState('');
+    
+    // Shuffle members once on initial render
+    const shuffledMembers = useMemo(() => shuffleArray(members), [members]);
 
     const filteredMembers = searchQuery
-        ? members.filter(member =>
+        ? shuffledMembers.filter(member =>
             member.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
             member.program?.toLowerCase().includes(searchQuery.toLowerCase()) ||
             member.website?.toLowerCase().includes(searchQuery.toLowerCase())
         )
-        : members;
+        : shuffledMembers;
 
     const filteredMemberIds = new Set(filteredMembers.map(m => m.id));
     const filteredConnections = searchQuery
@@ -54,7 +67,7 @@ export default function SearchableContent({ members, connections }: SearchableCo
                                 className="join-link"
                             >
                                 submit a pull request
-                            </a> to add yourself to the ring!
+                            </a>
                         </p>
                     </div>
                 </div>
