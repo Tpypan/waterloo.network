@@ -77,6 +77,18 @@ export const members: Member[] = [
     connections: ["daniel-ching", "fiona-cai", "kevin-thomas"],
   },
   {
+    id: "zane-beeai",
+    name: "Zane Beeai",
+    website: "https://zane.beeai.com",
+    program: "Biomedical Engineering",
+    year: "2030",
+    profilePic: "/photos/zane-beeai.png",
+    instagram: "https://www.instagram.com/zanevsgravity/",
+    twitter: "https://x.com/zanebeeai",
+    linkedin: "https://www.linkedin.com/in/zane-beeai/",
+    connections: ["shayaan-azeem"],
+  },
+  {
     id: "daniel-ching",
     name: "Daniel Ching",
     website: "https://danielcwq.com",
