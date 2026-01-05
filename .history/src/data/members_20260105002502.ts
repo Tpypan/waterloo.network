@@ -159,18 +159,6 @@ export const members: Member[] = [
     linkedin: "https://www.linkedin.com/in/ibrahim-ansari-code/",
     connections: ["muhib-waqar"],
   },
-  {
-    id: "pranav-marthi",
-    name: "Pranav Marthi",
-    website: "https://pranavmarthi.com",
-    program: "Software Engineering",
-    year: "2030",
-    profilePic: "/photos/pranav-marthi.png",
-    instagram: "https://www.instagram.com/pranav.marthi/",
-    twitter: "https://x.com/pranavcmarthi",
-    linkedin: "https://www.linkedin.com/in/pranav-marthi-7714a4215/",
-    connections: ["shayaan-azeem", "zane-beeai", "kevin-thomas"]
-  }
 
   // ============================================
   // ADD YOUR ENTRY ABOVE THIS LINE
