@@ -193,6 +193,17 @@ export const members: Member[] = [
     linkedin: "https://www.linkedin.com/in/avaansh-nanda/",
     connections: ["shayaan-azeem", "pranav-marthi"]
   },
+    {
+    id: "casper-dong",
+    name: "Casper Dong",
+    website: "https://casperdong.com",
+    program: "Knowledge Integration",
+    year: "2030",
+    profilePic: "/photos/casper-dong.png",
+    twitter: "https://x.com/casperkeyidong",
+    linkedin: "https://www.linkedin.com/in/casper-dong-64b623207/",
+    connections: ["shayaan-azeem", "pranav-marthi", "kevin-thomas"]
+  },
   // ============================================
   // ADD YOUR ENTRY ABOVE THIS LINE
   // ============================================
