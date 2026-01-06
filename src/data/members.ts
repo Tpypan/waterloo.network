@@ -170,8 +170,18 @@ export const members: Member[] = [
     twitter: "https://x.com/pranavcmarthi",
     linkedin: "https://www.linkedin.com/in/pranav-marthi-7714a4215/",
     connections: ["shayaan-azeem", "zane-beeai", "kevin-thomas"]
-  }
-
+  },
+  {
+    id: "victor-huang",
+    name: "Victor Huang",
+    website: "https://victor-huang.ca",
+    program: "Computer Science",
+    year: "2029",
+    profilePic: "/photos/victor-huang.png",
+    instagram: "https://www.instagram.com/vichua061001/",
+    linkedin: "https://www.linkedin.com/in/victor-qibin-huang/",
+    connections: ["shayaan-azeem"]
+  },
   // ============================================
   // ADD YOUR ENTRY ABOVE THIS LINE
   // ============================================
